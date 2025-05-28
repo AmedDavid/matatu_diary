@@ -6,6 +6,7 @@ import random
 
 fake = Faker()
 engine = create_engine("sqlite:///../../matatu_diary.db")
+print("Seed database path:", engine.url)  # Debug path
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -37,6 +38,11 @@ session.add_all(riders)
 session.commit()
 print(f"Inserted Rider rows: {session.query(Rider).count()}")
 
+# Print inserted riders
+print("\nInserted Riders:")
+for rider in session.query(Rider).all():
+    print(f"ID: {rider.id}, Name: {rider.name}, Usual Stop: {rider.usual_stop}")
+
 # Sample rides with driver vibes and nicknames
 rides = [
     MatatuRide(rider=riders[0], route="Route 46", fare=60, date=fake.date_this_year(), notes="Loud reggae, fast ride", driver_vibe="Hustler", matatu_nickname="Nganya za Ronga"),
@@ -47,4 +53,10 @@ rides = [
 session.add_all(rides)
 session.commit()
 print(f"Inserted MatatuRide rows: {session.query(MatatuRide).count()}")
+
+# Print inserted rides
+print("\nInserted Matatu Rides:")
+for ride in session.query(MatatuRide).all():
+    print(f"ID: {ride.id}, Rider ID: {ride.rider_id}, Route: {ride.route}, Fare: {ride.fare}, Date: {ride.date}, Notes: {ride.notes}, Driver Vibe: {ride.driver_vibe}, Matatu Nickname: {ride.matatu_nickname}")
+
 print("Seeding completed successfully!")

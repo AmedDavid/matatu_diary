@@ -2,15 +2,30 @@ from faker import Faker
 from models import Rider, MatatuRide
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import random
 
 fake = Faker()
-engine = create_engine("sqlite:///../matatu_diary.db")
+engine = create_engine("sqlite:///../../matatu_diary.db")
 Session = sessionmaker(bind=engine)
 session = Session()
+
+# Matatu nicknames
+MATATU_NICKNAMES = [
+    "Nganya za Ronga",
+    "KBS Flyer",
+    "Mtaa Blaster",
+    "Super Metro King",
+    "City Shuttle Beast",
+    "Rasta Roadman",
+    "Nairobi Drift"
+]
 
 # Clear existing data
 session.query(MatatuRide).delete()
 session.query(Rider).delete()
+session.commit()
+print(f"Deleted MatatuRide rows: {session.query(MatatuRide).count()}")
+print(f"Deleted Rider rows: {session.query(Rider).count()}")
 
 # Sample riders
 riders = [
@@ -19,14 +34,17 @@ riders = [
     Rider(name="Fatuma", usual_stop="Mombasa Old Town")
 ]
 session.add_all(riders)
+session.commit()
+print(f"Inserted Rider rows: {session.query(Rider).count()}")
 
-# Sample rides with driver vibes
+# Sample rides with driver vibes and nicknames
 rides = [
-    MatatuRide(rider=riders[0], route="Route 46", fare=60, date=fake.date_this_year(), notes="Loud reggae, fast ride", driver_vibe="Hustler"),
-    MatatuRide(rider=riders[0], route="Route 111", fare=50, date=fake.date_this_year(), notes="Rainy, slow traffic", driver_vibe="Chill"),
-    MatatuRide(rider=riders[1], route="Ngong Road", fare=40, date=fake.date_this_year(), notes="Quiet driver", driver_vibe="Laidback"),
-    MatatuRide(rider=riders[2], route="Route 33", fare=70, date=fake.date_this_year(), notes="Benga tunes, crowded", driver_vibe="Loud")
+    MatatuRide(rider=riders[0], route="Route 46", fare=60, date=fake.date_this_year(), notes="Loud reggae, fast ride", driver_vibe="Hustler", matatu_nickname="Nganya za Ronga"),
+    MatatuRide(rider=riders[0], route="Route 111", fare=50, date=fake.date_this_year(), notes="Rainy, slow traffic", driver_vibe="Chill", matatu_nickname="KBS Flyer"),
+    MatatuRide(rider=riders[1], route="Ngong Road", fare=40, date=fake.date_this_year(), notes="Quiet driver", driver_vibe="Laidback", matatu_nickname="Super Metro King"),
+    MatatuRide(rider=riders[2], route="Route 33", fare=70, date=fake.date_this_year(), notes="Benga tunes, crowded", driver_vibe="Loud", matatu_nickname="Rasta Roadman")
 ]
 session.add_all(rides)
-
 session.commit()
+print(f"Inserted MatatuRide rows: {session.query(MatatuRide).count()}")
+print("Seeding completed successfully!")

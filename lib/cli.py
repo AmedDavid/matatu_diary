@@ -32,17 +32,18 @@ def main():
             fare = int(input("Enter fare in KES: "))
             date = input("Enter date (YYYY-MM-DD): ")
             notes = input("Any notes? (e.g., loud music): ")
-            log_ride(rider_id, route, fare, date, notes)
+            driver_vibe = input("Driver vibe? (e.g., Chill, Loud, Hustler): ")
+            log_ride(rider_id, route, fare, date, notes, driver_vibe)
             print("Ride logged! Pole sana for the hustle.")
         elif choice == "3" and rider_id:
             rides = display_rides(rider_id)
             for ride in rides:
-                print(f"Route: {ride.route}, Fare: {ride.fare} KES, Date: {ride.date}, Notes: {ride.notes}")
+                print(f"Ride ID: {ride.id}, Route: {ride.route}, Fare: {ride.fare} KES, Date: {ride.date}, Notes: {ride.notes}, Driver Vibe: {ride.driver_vibe}")
         elif choice == "4" and rider_id:
             route = input("Enter route to search: ")
             rides = find_rides_by_route(rider_id, route)
             for ride in rides:
-                print(f"Date: {ride.date}, Fare: {ride.fare} KES, Notes: {ride.notes}")
+                print(f"Date: {ride.date}, Fare: {ride.fare} KES, Notes: {ride.notes}, Driver Vibe: {ride.driver_vibe}")
         elif choice == "5" and rider_id:
             avg_fare = analyze_fares(rider_id)
             print(f"Average fare for your routes: {avg_fare:.2f} KES")

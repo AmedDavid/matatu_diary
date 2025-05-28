@@ -22,5 +22,6 @@ class MatatuRide(Base):
     fare = Column(Integer, nullable=False)
     date = Column(Date, nullable=False)
     notes = Column(String)
+    driver_vibe = Column(String)
 
     rider = relationship("Rider", back_populates="rides")

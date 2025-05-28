@@ -23,5 +23,6 @@ class MatatuRide(Base):
     date = Column(Date, nullable=False)
     notes = Column(String)
     driver_vibe = Column(String)
+    matatu_nickname = Column(String) 
 
     rider = relationship("Rider", back_populates="rides")

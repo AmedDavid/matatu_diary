@@ -1,5 +1,5 @@
 from faker import Faker
-from db.models import Rider, MatatuRide
+from models import Rider, MatatuRide
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 

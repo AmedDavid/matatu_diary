@@ -1,9 +1,9 @@
-from models import Rider, MatatuRide
+from db.models import Rider, MatatuRide
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 
-engine = create_engine("sqlite:///matatu_diary.db")
+engine = create_engine("sqlite:///../matatu_diary.db")
 Session = sessionmaker(bind=engine)
 session = Session()
 

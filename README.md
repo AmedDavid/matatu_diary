@@ -4,7 +4,7 @@
 Karibu to the Matatu Route Diary, a jua kali CLI app for Kenyan commuters! Whether you’re dodging traffic on Route 46 from Kibera to CBD or vibing to benga tunes on a Mombasa matatu, this tool logs your rides. Track fares, routes, and driver vibes (e.g., “loud reggae, 60 KES”), then check trends like which route saves you cash. Built with Python, SQLAlchemy, and Alembic—pure hustle!
 
 ## Installation
-1. Clone this repo: `git clone <your-repo-url>`.
+1. Clone this repo: `git clone https://github.com/AmedDavid/matatu_diary.git`.
 2. CD into the folder and run `pipenv install` for SQLAlchemy, Alembic, and Faker.
 3. Fire up the env with `pipenv shell`.
 4. Set the database with `alembic upgrade head` from `lib/db`.

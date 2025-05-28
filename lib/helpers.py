@@ -13,8 +13,8 @@ def create_rider(name, usual_stop):
     session.commit()
     return new_rider
 
-def log_ride(rider_id, route, fare, date, notes):
-    new_ride = MatatuRide(rider_id=rider_id, route=route, fare=fare, date=datetime.strptime(date, "%Y-%m-%d"), notes=notes)
+def log_ride(rider_id, route, fare, date, notes, driver_vibe):
+    new_ride = MatatuRide(rider_id=rider_id, route=route, fare=fare, date=datetime.strptime(date, "%Y-%m-%d"), notes=notes, driver_vibe=driver_vibe)
     session.add(new_ride)
     session.commit()
     return new_ride

@@ -38,6 +38,9 @@ def get_or_create_rider(name, usual_stop):
     print(f"Created new rider: {name}, ID: {new_rider.id}")
     return new_rider
 
+def get_all_riders():
+    return session.query(Rider).all()
+
 def log_ride(rider_id, route, fare, date, notes, driver_vibe):
     matatu_nickname = random.choice(MATATU_NICKNAMES)
     new_ride = MatatuRide(
@@ -70,10 +73,23 @@ def analyze_fares(rider_id):
 
 def check_traffic_alerts(rider_id):
     rides = session.query(MatatuRide).filter_by(rider_id=rider_id).all()
-    traffic_routes = [ride.route for ride in rides if "traffic" in (ride.notes or "").lower()]
-    if traffic_routes:
-        suggestions = {route: TRAFFIC_ALTERNATIVES.get(route, "No alternative") for route in traffic_routes}
-        return traffic_routes, suggestions
+    traffic_rides = [(ride.route, ride.date, ride.notes) for ride in rides if "traffic" in (ride.notes or "").lower()]
+    if traffic_rides:
+        # Aggregate traffic reports by route
+        traffic_info = {}
+        for route, date, notes in traffic_rides:
+            if route not in traffic_info:
+                traffic_info[route] = []
+            traffic_info[route].append((date, notes))
+        # Generate report with congestion score
+        report = []
+        suggestions = {}
+        for route, reports in traffic_info.items():
+            score = len(reports)  # Simple score: number of traffic reports
+            latest_date = max(date for date, _ in reports)
+            report.append((route, score, latest_date))
+            suggestions[route] = TRAFFIC_ALTERNATIVES.get(route, "No alternative")
+        return report, suggestions
     return None, None
 
 def delete_rider(rider_id):
@@ -81,9 +97,13 @@ def delete_rider(rider_id):
     if rider:
         session.delete(rider)
         session.commit()
+        return True
+    return False
 
 def delete_ride(ride_id):
     ride = session.query(MatatuRide).get(ride_id)
     if ride:
         session.delete(ride)
         session.commit()
+        return True
+    return False

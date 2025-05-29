@@ -4,9 +4,8 @@ from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 import random
 
-# engine = create_engine("sqlite:///../matatu_diary.db")
 engine = create_engine("sqlite:///matatu_diary.db")
-print("helpers.py database path:", engine.url)  # Debug output
+print("helpers.py database path:", engine.url)
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -28,10 +27,15 @@ TRAFFIC_ALTERNATIVES = {
     "Ngong Road": "Route 24"
 }
 
-def create_rider(name, usual_stop):
+def get_or_create_rider(name, usual_stop):
+    rider = session.query(Rider).filter_by(name=name, usual_stop=usual_stop).first()
+    if rider:
+        print(f"Reusing existing rider: {name}, ID: {rider.id}")
+        return rider
     new_rider = Rider(name=name, usual_stop=usual_stop)
     session.add(new_rider)
     session.commit()
+    print(f"Created new rider: {name}, ID: {new_rider.id}")
     return new_rider
 
 def log_ride(rider_id, route, fare, date, notes, driver_vibe):

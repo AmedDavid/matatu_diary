@@ -5,8 +5,9 @@ from sqlalchemy.orm import sessionmaker
 import random
 
 fake = Faker()
-engine = create_engine("sqlite:///../../matatu_diary.db")
-print("Seed database path:", engine.url)  # Debug path
+# engine = create_engine("sqlite:///../../matatu_diary.db")
+engine = create_engine("sqlite:///matatu_diary.db")
+print("seed.py database path:", engine.url)  # Debug output
 Session = sessionmaker(bind=engine)
 session = Session()
 

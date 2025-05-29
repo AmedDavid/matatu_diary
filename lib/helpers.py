@@ -4,7 +4,9 @@ from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 import random
 
-engine = create_engine("sqlite:///../matatu_diary.db")
+# engine = create_engine("sqlite:///../matatu_diary.db")
+engine = create_engine("sqlite:///matatu_diary.db")
+print("helpers.py database path:", engine.url)  # Debug output
 Session = sessionmaker(bind=engine)
 session = Session()
 

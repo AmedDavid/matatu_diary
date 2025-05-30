@@ -107,3 +107,5 @@ def delete_ride(ride_id):
         session.commit()
         return True
     return False
+
+

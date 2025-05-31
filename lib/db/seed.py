@@ -61,4 +61,3 @@ for ride in session.query(MatatuRide).all():
     print(f"ID: {ride.id}, Rider ID: {ride.rider_id}, Route: {ride.route}, Fare: {ride.fare}, Date: {ride.date}, Notes: {ride.notes}, Driver Vibe: {ride.driver_vibe}, Matatu Nickname: {ride.matatu_nickname}")
 
 print("Seeding completed successfully!")
-

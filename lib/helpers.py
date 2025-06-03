@@ -95,6 +95,8 @@ def check_traffic_alerts(rider_id):
 def delete_rider(rider_id):
     rider = session.query(Rider).get(rider_id)
     if rider:
+        # Delete all associated rides first
+        session.query(MatatuRide).filter_by(rider_id=rider_id).delete()
         session.delete(rider)
         session.commit()
         return True
